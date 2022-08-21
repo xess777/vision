@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      dockerfile: ./docker/app/Dockerfile
+      context: .
+    volumes:
+      - ./media/:/app/media/
+    environment:
+      - MEDIA_PATH=/app/media
+      - BADGER_TEMPLATE=/app/badger/template.png
+
+  nginx:
+    build: ./docker/nginx/.
+    depends_on:
+      - app
+    ports:
+      - "80:80"
